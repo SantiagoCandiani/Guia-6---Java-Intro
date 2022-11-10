@@ -8,27 +8,32 @@ package ejercicio20;
 import java.util.Scanner;
 
 /**
-Un cuadrado mágico 3 x 3 es una matriz 3 x 3 formada por números del 1 al 9 donde la
-suma de sus filas, sus columnas y sus diagonales son idénticas. Crear un programa que
-permita introducir un cuadrado por teclado y determine si este cuadrado es mágico o no.
-El programa deberá comprobar que los números introducidos son correctos, es decir,
-están entre el 1 y el 9.
+ * FUn cuadrado mÃ¡gico 3 x 3 es una matriz 3 x 3 formada por nÃºmeros del 1 al
+ * 9 donde la suma de sus filas, sus columnas y sus diagonales son idÃ©nticas.
+ * Crear un programa que permita introducir un cuadrado por teclado y determine
+ * si este cuadrado es mÃ¡gico o no. El programa deberÃ¡ comprobar que los
+ * nÃºmeros introducidos son correctos, es decir, estÃ¡n entre el 1 y el 9.
+ *
+ * @author Ayelen Menin
  */
 public class Ejercicio20 {
 
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         Scanner leer = new Scanner(System.in);
 
         int[][] matriz = new int[3][3];
+
         matriz[0][0] = 2;
-        matriz[0][1] = 7;
-        matriz[0][2] = 6;
-        matriz[1][0] = 9;
+        matriz[0][1] = 9;
+        matriz[0][2] = 4;
+        matriz[1][0] = 7;
         matriz[1][1] = 5;
-        matriz[1][2] = 8;
-        matriz[2][0] = 4;
-        matriz[2][1] = 3;
+        matriz[1][2] = 3;
+        matriz[2][0] = 6;
+        matriz[2][1] = 1;
         matriz[2][2] = 8;
 
         System.out.println("La matriz es:");
@@ -40,30 +45,63 @@ public class Ejercicio20 {
             }
             System.out.println("");
         }
-        
-        int contF = 0;
-        int contC = 0;
-        int contD1 = 0;
-        int contD2 = 0;
+
+        //para sumar columnas
+        int suma = 0;
+        int[] colum = new int[3];
 
         for (int i = 0; i < 3; i++) {
-            contF = contF + matriz[0][i];
-            contC = contC + matriz[i][0];
-            contD1 = contD1 + matriz[i][i];
-            contD2 = contD2 + matriz[i][2 - i];
-        }
-        System.out.println(contF);
-        System.out.println(contC);
-        System.out.println(contD1);
-        System.out.println(contD2);
-        
-        if ((contF == contC) && (contC == contD1) && (contD1 == contD2)) {
-            System.out.println("La matriz es magica");
-        } else{
-            System.out.println("La matriz no es magica");
-        }
-        
-        NO SIRVE.
-    }
+            for (int j = 0; j < 3; j++) {
 
+                suma = suma + matriz[i][j];
+
+            }
+            System.out.println(" la suma de la Col " + i + " es = " + suma);
+            colum[i] = suma;
+            suma = 0;
+        }
+
+        int[] fila = new int[3];
+
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 3; i++) {
+
+                suma = suma + matriz[i][j];
+
+            }
+            System.out.println(" la suma de la Fila " + j + " es = " + suma);
+            fila[j] = suma;
+            suma = 0;
+        }
+
+        // diagonal
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+
+                if (i == j) {
+
+                    suma = suma + matriz[i][j];
+                }
+            }
+        }
+        System.out.println(" la suma de la Diagonal es = " + suma);
+        int diag = suma;
+
+        boolean flag = true;
+
+        for (int i = 0; i < 3; i++) {
+
+            if ((colum[i] == fila[i]) && (colum[i] == diag) && (flag)) {
+                flag = true;
+            } else {
+                flag = false;
+            }
+        }
+
+        if (flag) {
+            System.out.println("La Matriz es Magica");
+        } else {
+            System.out.println("La matriz NO es Magica");
+        }
+    }
 }
