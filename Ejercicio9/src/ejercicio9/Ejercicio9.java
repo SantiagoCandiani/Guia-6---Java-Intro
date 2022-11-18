@@ -22,7 +22,7 @@ public class Ejercicio9 {
         Scanner leer = new Scanner(System.in);
         System.out.println("Ingrese una frase que cominece con A/a:");
         String frase = leer.nextLine();
-        if (frase.toLowerCase().substring(0, 1).equals("a")){
+        if (frase.toUpperCase().substring(0, 1).equals("A")){
             System.out.println("La palabra es CORRECTA.");
         }
         else{
