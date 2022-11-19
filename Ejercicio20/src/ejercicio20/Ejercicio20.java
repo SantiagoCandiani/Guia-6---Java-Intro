@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejercicio20;
 
 import java.util.Scanner;
@@ -14,94 +9,89 @@ import java.util.Scanner;
  * si este cuadrado es mÃ¡gico o no. El programa deberÃ¡ comprobar que los
  * nÃºmeros introducidos son correctos, es decir, estÃ¡n entre el 1 y el 9.
  *
- * @author Ayelen Menin
  */
 public class Ejercicio20 {
 
-    /**
-     * @param args the command line arguments
-     */
+    static Scanner leer = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner leer = new Scanner(System.in);
 
+//        2 9 4
+//        7 5 3
+//        6 1 8
+        System.out.println("ingrese los 9 valores de la martriz");
         int[][] matriz = new int[3][3];
+        llenado(matriz);
+        mostrar(matriz);
+        if (comprobacionlinea(matriz)) {
+            System.out.println("la matriz es magica");
+        } else {
+            System.out.println("la matriz no es magica");
+        }
+    }
 
-        matriz[0][0] = 2;
-        matriz[0][1] = 9;
-        matriz[0][2] = 4;
-        matriz[1][0] = 7;
-        matriz[1][1] = 5;
-        matriz[1][2] = 3;
-        matriz[2][0] = 6;
-        matriz[2][1] = 1;
-        matriz[2][2] = 8;
+    public static void llenado(int[][] matriz) {
 
-        System.out.println("La matriz es:");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
+                matriz[i][j] = leer.nextInt();
+            }
+        }
+    }
 
-                System.out.print(matriz[i][j]);
-                System.out.print("   ");
+    public static void mostrar(int[][] matriz) {
+
+        System.out.println("La matriz llenada queda:");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(matriz[i][j]);;
+                System.out.print(" | ");
             }
             System.out.println("");
         }
+    }
 
-        //para sumar columnas
-        int suma = 0;
-        int[] colum = new int[3];
+    public static boolean comprobacionlinea(int[][] matriz) {
 
+        int sumai = 0;
         for (int i = 0; i < 3; i++) {
+            sumai += matriz[0][i];
+        }
+
+        for (int i = 1; i < 3; i++) {
+            int sumafila = 0;
             for (int j = 0; j < 3; j++) {
-
-                suma = suma + matriz[i][j];
-
+                sumafila += matriz[i][j];
             }
-            System.out.println(" la suma de la Col " + i + " es = " + suma);
-            colum[i] = suma;
-            suma = 0;
+            if (sumafila != sumai) {
+                return false;
+            }
         }
 
-        int[] fila = new int[3];
-
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 3; i++) {
-
-                suma = suma + matriz[i][j];
-
-            }
-            System.out.println(" la suma de la Fila " + j + " es = " + suma);
-            fila[j] = suma;
-            suma = 0;
-        }
-
-        // diagonal
         for (int i = 0; i < 3; i++) {
+            int sumacolumna = 0;
             for (int j = 0; j < 3; j++) {
-
-                if (i == j) {
-
-                    suma = suma + matriz[i][j];
-                }
+                sumacolumna += matriz[j][i];
+            }
+            if (sumacolumna != sumai) {
+                return false;
             }
         }
-        System.out.println(" la suma de la Diagonal es = " + suma);
-        int diag = suma;
-
-        boolean flag = true;
+        int sumadiagmayor = 0;
 
         for (int i = 0; i < 3; i++) {
-
-            if ((colum[i] == fila[i]) && (colum[i] == diag) && (flag)) {
-                flag = true;
-            } else {
-                flag = false;
-            }
+            sumadiagmayor += matriz[i][i];
         }
+        if (sumadiagmayor != sumai) {
+            return false;
 
-        if (flag) {
-            System.out.println("La Matriz es Magica");
-        } else {
-            System.out.println("La matriz NO es Magica");
         }
+        int sumadiaginvert = 0;
+        int aux = 2;
+        for (int i = 0; i < 3; i++) {
+            sumadiaginvert += matriz[i][aux];
+            aux--;
+        }
+        return sumadiaginvert == sumai;
     }
 }
